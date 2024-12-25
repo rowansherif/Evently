@@ -11,7 +11,7 @@ class EventItemWidget extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Container(
       height: height * 0.3,
-      padding: EdgeInsets.symmetric(vertical: height * 0.02, horizontal:  width * 0.02),
+      padding: EdgeInsets.symmetric(vertical: height * 0.015, horizontal:  width * 0.03),
       decoration: BoxDecoration(
         border: Border.all(
           color: AppColors.primaryLight,
@@ -46,7 +46,7 @@ class EventItemWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('This is a Birthday Party ',style: AppStyles.bold14black,),
+                Expanded(child: Text('This is a Birthday Party ',style: AppStyles.bold14black,)),
                 ImageIcon(AssetImage(AssetsManager.favouriteIconSelected),
                 color:  AppColors.primaryLight,)
               ],
