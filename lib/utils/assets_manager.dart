@@ -26,4 +26,6 @@ class AssetsManager{
   static const String searchIcon = 'assets/images/search_icon.png';
   static const String userNameIcon = 'assets/images/user_name_icon.png';
   static const String showPasswordIcon = 'assets/images/icon_show_password.png';
+  static const String forgetPasswordScreenImage =
+      'assets/images/forget_password_screen_image.png';
 }

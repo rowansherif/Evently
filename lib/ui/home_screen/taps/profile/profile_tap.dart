@@ -1,7 +1,6 @@
 import 'package:events_app/providers/app_language_provider.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/ui/home_screen/language_bottom_sheet.dart';
-import 'package:events_app/ui/home_screen/taps/custom_elevated_button.dart';
 import 'package:events_app/ui/home_screen/theme_bottom_sheet.dart';
 import 'package:events_app/utils/app_colors.dart';
 import 'package:events_app/utils/app_styles.dart';
@@ -36,7 +35,10 @@ class _ProfileTapState extends State<ProfileTap> {
         ),
         title: Row(
           children: [
-            Image.asset(AssetsManager.routeImage,
+            Transform.flip(
+              child: Image.asset(
+                AssetsManager.routeImage,
+              ),
             ),
             SizedBox(width: width*0.02,),
             Column(

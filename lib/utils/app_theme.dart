@@ -7,7 +7,7 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.primaryLight,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primaryLight,
+      backgroundColor: AppColors.whiteColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       showUnselectedLabels: true,

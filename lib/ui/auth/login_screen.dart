@@ -1,3 +1,5 @@
+import 'package:events_app/ui/auth/create_account_screen.dart';
+import 'package:events_app/ui/auth/forget_password_screen.dart';
 import 'package:events_app/ui/home_screen/taps/custom_elevated_button.dart';
 import 'package:events_app/ui/home_screen/taps/custom_textfield.dart';
 import 'package:events_app/utils/app_colors.dart';
@@ -5,6 +7,8 @@ import 'package:events_app/utils/app_styles.dart';
 import 'package:events_app/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../home_screen/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = 'login_screen';
@@ -43,7 +47,10 @@ class LoginScreen extends StatelessWidget {
                   color: AppColors.greyColor,
                 )),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(ForgetPasswordScreen.routeName);
+                },
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
@@ -56,21 +63,27 @@ class LoginScreen extends StatelessWidget {
                 )),
             CustomElevatedButton(
               buttonOnClick: () {
-                //Navigator.of(context).pushReplacement(HomeScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(HomeScreen.routeName);
               },
               buttonTitle: AppLocalizations.of(context)!.login,
               buttonColor: AppColors.primaryLight,
             ),
-            Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: AppLocalizations.of(context)!.doNotHaveAccount,
-                  style: AppStyles.medium16Black),
-              TextSpan(
-                  text: AppLocalizations.of(context)!.createAccount,
-                  style: AppStyles.boldItalic16PrimaryLight.copyWith(
-                      decoration: TextDecoration.underline,
-                      color: AppColors.primaryLight))
-            ])),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(CreateAccountScreen.routeName);
+              },
+              child: Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: AppLocalizations.of(context)!.doNotHaveAccount,
+                    style: AppStyles.medium16Black),
+                TextSpan(
+                    text: AppLocalizations.of(context)!.createAccount,
+                    style: AppStyles.boldItalic16PrimaryLight.copyWith(
+                        decoration: TextDecoration.underline,
+                        color: AppColors.primaryLight))
+              ])),
+            ),
             Row(
               children: [
                 Expanded(
