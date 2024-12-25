@@ -33,5 +33,6 @@
 "love" : "المفضلة",
 "profile" : "الملف الشخصي",
 "logout" : "تسجيل الخروج",
-"register" : "تسجيل الدخول"
+"register" : "تسجيل الدخول",
+"loginWithGoogle" : "Login With Google"
 }

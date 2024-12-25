@@ -7,10 +7,12 @@ class CustomElevatedButton extends StatelessWidget {
   String buttonTitle;
   Widget? buttonIcon;
   Color buttonColor;
+  TextStyle? buttonTitleStyle;
 
   CustomElevatedButton(
       {required this.buttonOnClick,
       required this.buttonTitle,
+      this.buttonTitleStyle,
       this.buttonIcon,
       this.buttonColor = AppColors.transparentColor});
   @override
@@ -19,24 +21,29 @@ class CustomElevatedButton extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor,
+            elevation: 0,
+            backgroundColor: buttonColor,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                // side: BorderSide(
-                //
-                // )
-            )),
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: AppColors.primaryLight, width: 1.5))),
         onPressed: () {
           buttonOnClick();
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buttonIcon ?? SizedBox(),
-            SizedBox(width: width * 0.02,),
-            Text(buttonTitle,
-            style: AppStyles.medium20White,),
-          ],
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: height * 0.02),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buttonIcon ?? SizedBox(),
+              SizedBox(
+                width: width * 0.02,
+              ),
+              Text(
+                buttonTitle,
+                style: buttonTitleStyle ?? AppStyles.medium20White,
+              ),
+            ],
+          ),
         ));
   }
 }

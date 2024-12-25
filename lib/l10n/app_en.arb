@@ -33,5 +33,6 @@
 "love" : "Love",
 "profile" : "Profile",
 "logout" : "Logout",
-"register" : "Register"
+"register" : "Register",
+"loginWithGoogle" : "Login With Google"
 }

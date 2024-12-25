@@ -3,7 +3,7 @@ import 'package:events_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextfield extends StatelessWidget {
-  Color borderColor;
+  Color? borderColor;
   Widget? prefixIcon;
   Widget? suffixIcon;
   String hintText;
@@ -11,8 +11,7 @@ class CustomTextfield extends StatelessWidget {
   TextStyle? hintStyle;
   TextStyle? labelStyle;
   bool obscureText;
-  CustomTextfield(
-      {this.borderColor = AppColors.greyColor,
+  CustomTextfield({this.borderColor,
       this.prefixIcon,
       this.suffixIcon,
       required this.hintText,
@@ -24,6 +23,8 @@ class CustomTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText,
+      obscuringCharacter: '*',
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: labelStyle ?? AppStyles.medium16Grey,
@@ -34,14 +35,14 @@ class CustomTextfield extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: borderColor,
+            color: borderColor ?? AppColors.greyColor,
             width: 2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: borderColor,
+            color: borderColor ?? AppColors.greyColor,
             width: 2,
           ),
         ),
