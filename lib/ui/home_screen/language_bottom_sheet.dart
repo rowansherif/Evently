@@ -26,7 +26,7 @@ class LanguageBottomSheet extends StatelessWidget {
               mainAxisAlignment:  MainAxisAlignment.spaceBetween,
               children: [
                 Text(AppLocalizations.of(context)!.english,
-                style: AppStyles.bold20Primary,),
+                style: AppStyles.bold20PrimaryLight,),
                 Icon(Icons.check,
                 color: AppColors.primaryLight,),
               ],
@@ -45,7 +45,7 @@ class LanguageBottomSheet extends StatelessWidget {
               mainAxisAlignment:  MainAxisAlignment.spaceBetween,
               children: [
                 Text(AppLocalizations.of(context)!.arabic,
-                  style: AppStyles.bold20Primary,),
+                  style: AppStyles.bold20PrimaryLight,),
                 Icon(Icons.check,
                   color: AppColors.primaryLight,),
               ],

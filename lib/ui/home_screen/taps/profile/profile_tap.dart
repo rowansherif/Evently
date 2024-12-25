@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileTap extends StatefulWidget {
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileTap> createState() => _ProfileTapState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileTapState extends State<ProfileTap> {
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +23,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var languageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
 
-    // List<String> languageItems = [
-    //   AppLocalizations.of(context)!.english,
-    //   AppLocalizations.of(context)!.arabic
-    // ];
-    // String selectedLanguage = languageItems[0];
-    //
-    // List<String> themeItems = [
-    //   AppLocalizations.of(context)!.light,
-    //   AppLocalizations.of(context)!.dark
-    // ];
-    // String selectedTheme = themeItems[0];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryLight,
@@ -46,7 +35,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         title: Row(
           children: [
-            Image.asset(AssetsManager.routeImage),
+            Transform.flip(
+              child: Image.asset(
+                AssetsManager.routeImage,
+              ),
+            ),
             SizedBox(width: width*0.02,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding:  EdgeInsets.symmetric(vertical: height * 0.02, horizontal: width * 0.04),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -96,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       AppLocalizations.of(context)!.english
                     :
                     AppLocalizations.of(context)!.arabic,
-                    style: AppStyles.bold20Primary,),
+                    style: AppStyles.bold20PrimaryLight,),
                     Icon(Icons.arrow_drop_down,
                       color: AppColors.primaryLight,
                     size: 30,)
@@ -105,20 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             SizedBox(height: height * 0.02,),
-            // DropdownButton(
-            //     isExpanded: true,
-            //     items: languageItems.map((String item){
-            //       return DropdownMenuItem(
-            //         value: item,
-            //           child: Text(item,
-            //           style: AppStyles.bold20black,));
-            //     }).toList(),
-            //     value: selectedLanguage,
-            //     onChanged: (value){
-            //       setState(() {
-            //         selectedLanguage = value!;
-            //       });
-            //     }),
+
             Text(
               AppLocalizations.of(context)!.theme,
               style:  themeProvider.appTheme == ThemeMode.dark?
@@ -150,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       AppLocalizations.of(context)!.dark
                       :
                       AppLocalizations.of(context)!.light,
-                      style: AppStyles.bold20Primary,),
+                      style: AppStyles.bold20PrimaryLight,),
                     Icon(Icons.arrow_drop_down,
                     color: AppColors.primaryLight,
                     size: 30,)
@@ -158,21 +138,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+            SizedBox(height: height* 0.26,),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.redColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)
+                )
+              ),
+              onPressed: (){},
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: height * 0.015),
+                padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+                child: Row(
+                  spacing: width * 0.02,
+                  children: [
+                    ImageIcon(AssetImage(AssetsManager.logoutIcon),
+                    size: 24,
+                    color: AppColors.whiteColor,),
+                    Text(AppLocalizations.of(context)!.logout,
+                    style: AppStyles.regular20White,)
+                  ],
+                ),
+              ),
+            )
 
-            // DropdownButton(
-            //     isExpanded: true,
-            //     items: themeItems.map((String item){
-            //       return DropdownMenuItem(
-            //           value: item,
-            //           child: Text(item,
-            //             style: AppStyles.bold20black,));
-            //     }).toList(),
-            //     value: selectedTheme,
-            //     onChanged: (String? value){
-            //       setState(() {
-            //         selectedTheme = value!;
-            //       });
-            //     }),
           ],
         ),
       ),

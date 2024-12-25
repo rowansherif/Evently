@@ -27,7 +27,7 @@ class ThemeBottomSheet extends StatelessWidget {
               mainAxisAlignment:  MainAxisAlignment.spaceBetween,
               children: [
                 Text(AppLocalizations.of(context)!.dark,
-                style: AppStyles.bold20Primary,),
+                style: AppStyles.bold20PrimaryLight,),
                 Icon(Icons.check,
                 color: AppColors.primaryLight,),
               ],
@@ -46,7 +46,7 @@ class ThemeBottomSheet extends StatelessWidget {
               mainAxisAlignment:  MainAxisAlignment.spaceBetween,
               children: [
                 Text(AppLocalizations.of(context)!.light,
-                  style: AppStyles.bold20Primary,),
+                  style: AppStyles.bold20PrimaryLight,),
                 Icon(Icons.check,
                   color: AppColors.primaryLight,),
               ],
