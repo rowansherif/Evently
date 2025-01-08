@@ -34,5 +34,21 @@
 "profile" : "الملف الشخصي",
 "logout" : "تسجيل الخروج",
 "register" : "تسجيل الدخول",
-"loginWithGoogle" : "Login With Google"
+"loginWithGoogle" : "Login With Google",
+"title" : "العنوان",
+"eventTitle" : "عنوان الحدث",
+"description" : "الوصف",
+"eventDescription" : "وصف الحدث",
+"eventDate" : "تاريخ الحدث",
+"createEvent" : "انشاء حدث",
+"chooseDate" : "اختر تاريخ",
+"chooseTme" : "اختر وقت",
+"eventTime" : "وقت الحدث",
+"chooseEventLocation" : "اختر موقع الحدث",
+"addEvent" : "اضافة الحدث",
+"location" : "الموقع",
+"pleaseEnterEventTitle" : "برجاء ادخال عنوان الحدث",
+"pleaseEnterEventDescription" : "برجاء ادخال وصف الحدث",
+"noEvents" : "لا يوجد احداث",
+"noFavouriteEvent" : "لا يوجد احداث مفضلة"
 }

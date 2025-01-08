@@ -1,10 +1,13 @@
+import 'package:events_app/providers/app_theme_provider.dart';
+import 'package:events_app/providers/event_list_provider.dart';
 import 'package:events_app/ui/home_screen/taps/home/event_item_widget.dart';
 import 'package:events_app/ui/home_screen/taps/home/tap_event_widget.dart';
 import 'package:events_app/utils/app_colors.dart';
 import 'package:events_app/utils/app_styles.dart';
 import 'package:events_app/utils/assets_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class HomeTap extends StatefulWidget {
   @override
@@ -12,24 +15,18 @@ class HomeTap extends StatefulWidget {
 }
 
 class _HomeTapState extends State<HomeTap> {
-  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    List<String> eventNameList = [
-      AppLocalizations.of(context)!.all,
-      AppLocalizations.of(context)!.sport,
-      AppLocalizations.of(context)!.birthday,
-      AppLocalizations.of(context)!.meeting,
-      AppLocalizations.of(context)!.gaming,
-      AppLocalizations.of(context)!.workshop,
-      AppLocalizations.of(context)!.bookClub,
-      AppLocalizations.of(context)!.exhibition,
-      AppLocalizations.of(context)!.holiday,
-      AppLocalizations.of(context)!.eating,
-    ];
+    var eventListProvider = Provider.of<EventListProvider>(context);
+    var themeProvider = Provider.of<AppThemeProvider>(context);
+    eventListProvider.getEventNameList(context);
+
+    if (eventListProvider.eventList.isEmpty) {
+      eventListProvider.showAllEvents();
+    }
     return Scaffold(
       appBar: AppBar(
         // shape: RoundedRectangleBorder(
@@ -103,11 +100,10 @@ class _HomeTapState extends State<HomeTap> {
                   ],
                 ),
                 DefaultTabController(
-                    length: eventNameList.length,
+                    length: eventListProvider.eventNameList.length,
                     child: TabBar(
                       onTap: (index) {
-                        selectedIndex = index;
-                        setState(() {});
+                        eventListProvider.changeSelectedIndex(index);
                       },
                       isScrollable: true,
                       indicatorColor: AppColors.transparentColor,
@@ -115,26 +111,37 @@ class _HomeTapState extends State<HomeTap> {
                       tabAlignment: TabAlignment.start,
                       labelPadding: EdgeInsets.symmetric(
                           horizontal: width * 0.01, vertical: height * 0.02),
-                      tabs: eventNameList.map((eventName) {
+                      tabs: eventListProvider.eventNameList.map((eventName) {
                         return TapEventWidget(
                             eventName: eventName,
-                            isSelected:
-                                selectedIndex == eventNameList.indexOf(eventName));
+                            isSelected: eventListProvider.selectedIndex ==
+                                eventListProvider.eventNameList
+                                    .indexOf(eventName));
                       }).toList(),
                     )),
               ],
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(vertical: height * 0.02,horizontal: width * 0.02),
+            child: eventListProvider.filteredEventList.isEmpty
+                ? Center(
+                    child: Text(
+                    AppLocalizations.of(context)!.noEvents,
+                    style: themeProvider.appTheme == ThemeMode.light
+                        ? AppStyles.medium16Black
+                        : AppStyles.medium16White,
+                  ))
+                : ListView.separated(
+                    padding: EdgeInsets.symmetric(vertical: height * 0.02,horizontal: width * 0.02),
                 itemBuilder: (context, index){
-                  return EventItemWidget();
-                },
+                      return EventItemWidget(
+                        event: eventListProvider.filteredEventList[index],
+                      );
+                    },
                 separatorBuilder: (context, index){
                   return SizedBox(height: height * 0.02,);
                 },
-                itemCount: 10),
+                    itemCount: eventListProvider.filteredEventList.length),
           )
         ],
       ),

@@ -59,7 +59,7 @@ flutter_native_splash:
   # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply
   # ensure that the most important design elements of your image are placed within a circular area
   # with a 768 diameter at the center of the 1152x1152 canvas.
-    image: assets/images/logo_image.png
+    image: assets/images/Logo_image_light.png
 
   # Splash screen background color.
     color: "#F2FEFF"
@@ -68,13 +68,14 @@ flutter_native_splash:
   #icon_background_color: "#111111"
 
   # The branding property allows you to specify an image used as branding in the splash screen.
-    branding: assets/images/branding_image.png
+    branding: assets/images/branding_image_light.png
 
   # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
   # apply when the device is in dark mode. If they are not specified, the app will use the
   # parameters from above.
-  # image_dark: assets/images/logo_light.png
+    image_dark: assets/images/Logo_image_dark.png
     color_dark: "#101127"
+    branding_dark: assets/images/branding_image_dark.png
   #icon_background_color_dark: "#eeeeee"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given

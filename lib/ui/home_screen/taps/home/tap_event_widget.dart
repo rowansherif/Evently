@@ -4,8 +4,19 @@ import 'package:flutter/material.dart';
 
 class TapEventWidget extends StatelessWidget {
   String eventName;
+  Color? borderColor;
+  Color? boxColor;
+  TextStyle? selectedTextStyle;
+  TextStyle? unSelectedTextStyle;
   bool isSelected;
-  TapEventWidget({required this.eventName, required this.isSelected});
+
+  TapEventWidget(
+      {required this.eventName,
+      required this.isSelected,
+      this.borderColor,
+      this.boxColor,
+      this.selectedTextStyle,
+      this.unSelectedTextStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +27,18 @@ class TapEventWidget extends StatelessWidget {
           vertical: height * 0.005, horizontal: width * 0.05),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: isSelected ? AppColors.whiteColor : AppColors.transparentColor,
-      ),
+          color: isSelected
+              ? boxColor ?? AppColors.whiteColor
+              : AppColors.transparentColor,
+          border: Border.all(
+            color: borderColor ?? AppColors.whiteColor,
+            width: 1.5,
+          )),
       child: Text(
         eventName,
         style: isSelected
-            ? AppStyles.medium16PrimaryLight
-            : AppStyles.medium16White,
+            ? selectedTextStyle ?? AppStyles.medium16PrimaryLight
+            : unSelectedTextStyle ?? AppStyles.medium16White,
       ),
     );
   }

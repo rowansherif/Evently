@@ -1,6 +1,10 @@
+import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/utils/app_colors.dart';
 import 'package:events_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+typedef MyValidator = String? Function(String?)?;
 
 class CustomTextfield extends StatelessWidget {
   Color? borderColor;
@@ -11,38 +15,66 @@ class CustomTextfield extends StatelessWidget {
   TextStyle? hintStyle;
   TextStyle? labelStyle;
   bool obscureText;
-  CustomTextfield({this.borderColor,
+  int maxLines;
+  MyValidator validator;
+  TextEditingController? controller;
+
+  CustomTextfield(
+      {this.borderColor,
       this.prefixIcon,
       this.suffixIcon,
       required this.hintText,
       this.hintStyle,
+      this.validator,
+      this.controller,
+      this.maxLines = 1,
       this.labelText,
       this.labelStyle,
       this.obscureText = false});
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<AppThemeProvider>(context);
     return TextFormField(
+      controller: controller,
+      validator: validator,
+      maxLines: maxLines,
       obscureText: obscureText,
       obscuringCharacter: '*',
+      style: themeProvider.appTheme == ThemeMode.light
+          ? AppStyles.medium16Black
+          : AppStyles.medium16White,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: labelStyle ?? AppStyles.medium16Grey,
+        labelStyle: labelStyle ??
+            (themeProvider.appTheme == ThemeMode.light
+                ? AppStyles.medium16Grey
+                : AppStyles.medium20White),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         hintText: hintText,
-        hintStyle: hintStyle ?? AppStyles.medium16Grey,
+        hintStyle: hintStyle ??
+            (themeProvider.appTheme == ThemeMode.light
+                ? AppStyles.medium16Grey
+                : AppStyles.medium16White),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: borderColor ?? AppColors.greyColor,
+            color: borderColor ??
+                (themeProvider.appTheme == ThemeMode.light
+                    ? AppColors.greyColor
+                    : AppColors.primaryLight),
             width: 2,
           ),
         ),
+        errorStyle: AppStyles.medium16Red,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: borderColor ?? AppColors.greyColor,
+            color: borderColor ??
+                (themeProvider.appTheme == ThemeMode.light
+                    ? AppColors.greyColor
+                    : AppColors.primaryLight),
             width: 2,
           ),
         ),

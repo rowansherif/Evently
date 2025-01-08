@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppThemeProvider extends ChangeNotifier{
@@ -11,5 +10,4 @@ class AppThemeProvider extends ChangeNotifier{
     appTheme = newTheme;
     notifyListeners();
   }
-
 }

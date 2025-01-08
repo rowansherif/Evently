@@ -168,5 +168,4 @@ class _ProfileTapState extends State<ProfileTap> {
       ),
     );
   }
-
 }

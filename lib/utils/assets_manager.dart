@@ -1,7 +1,8 @@
 class AssetsManager{
   static const String splashScreenLight = 'assets/images/splash_screen_light.png';
   static const String splashScreenDark = 'assets/images/splash_screen_dark.png';
-  static const String logo = 'assets/images/Logo_image.png';
+  static const String lightLogo = 'assets/images/Logo_image_light.png';
+  static const String darkLogo = 'assets/images/Logo_image_dark.png';
   static const String homeIconUnselected = 'assets/images/home_icon_unselected.png';
   static const String mapIconUnselected = 'assets/images/map_icon_unselected.png';
   static const String favouriteIconUnselected = 'assets/images/love_icon_unselected.png';
@@ -12,20 +13,27 @@ class AssetsManager{
   static const String profileIconSelected = 'assets/images/profile_icon_selected.png';
   static const String routeImage = 'assets/images/Route_profile_image.png';
   static const String calenderIcon = 'assets/images/calender_icon.png';
-  static const String birthdayEventBg = 'assets/images/birthday_event_bg.png';
   static const String deleteIcon = 'assets/images/delete_icon.png';
   static const String editingIcon = 'assets/images/editing_icon.png';
   static const String emailIcon = 'assets/images/email_icon.png';
-  static const String exhibitionEventBg = 'assets/images/exhibition_event_bg.png';
   static const String googleIcon = 'assets/images/google_icon.png';
-  static const String holidayBg = 'assets/images/holiday_bg.png';
   static const String locationIcon = 'assets/images/location_icon.png';
   static const String logoutIcon = 'assets/images/logout_icon.png';
-  static const String meetingEventBg = 'assets/images/meeting_event_bg.png';
   static const String passwordIcon = 'assets/images/password_icon.png';
   static const String searchIcon = 'assets/images/search_icon.png';
   static const String userNameIcon = 'assets/images/user_name_icon.png';
   static const String showPasswordIcon = 'assets/images/icon_show_password.png';
+  static const String eventTitleIcon = 'assets/images/event_title_icon.png';
   static const String forgetPasswordScreenImage =
       'assets/images/forget_password_screen_image.png';
+  static const String timeIcon = 'assets/images/time_icon.png';
+  static const String birthdayImage = 'assets/images/birthday_image.png';
+  static const String sportImage = 'assets/images/sport_image.png';
+  static const String gamingImage = 'assets/images/gaming_image.png';
+  static const String eatingImage = 'assets/images/eating_image.png';
+  static const String exhibitionImage = 'assets/images/exhibition_image.png';
+  static const String workshopImage = 'assets/images/workshop_image.png';
+  static const String bookClubImage = 'assets/images/book_club_image.png';
+  static const String meetingImage = 'assets/images/meeting_image.png';
+  static const String holidayImage = 'assets/images/holiday_image.png';
 }

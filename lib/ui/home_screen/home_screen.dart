@@ -1,9 +1,9 @@
+import 'package:events_app/ui/home_screen/add_event/add_event_screen.dart';
 import 'package:events_app/ui/home_screen/taps/home/home_tap.dart';
 import 'package:events_app/ui/home_screen/taps/love/love_tap.dart';
 import 'package:events_app/ui/home_screen/taps/map/map_tap.dart';
 import 'package:events_app/ui/home_screen/taps/profile/profile_tap.dart';
 import 'package:events_app/utils/app_colors.dart';
-import 'package:events_app/utils/app_styles.dart';
 import 'package:events_app/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -72,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
           onPressed: (){
             //TODO: Navigate to add event screen
-          },
+          Navigator.of(context).pushNamed(AddEventScreen.routeName);
+        },
         child: Icon(Icons.add,
         color:  AppColors.whiteColor,
         size: 35,),

@@ -1,14 +1,28 @@
+import 'package:events_app/model/event.dart';
+import 'package:events_app/providers/event_list_provider.dart';
 import 'package:events_app/utils/app_colors.dart';
 import 'package:events_app/utils/app_styles.dart';
 import 'package:events_app/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class EventItemWidget extends StatelessWidget {
+class EventItemWidget extends StatefulWidget {
+  Event event;
+
+  EventItemWidget({required this.event});
 
   @override
+  State<EventItemWidget> createState() => _EventItemWidgetState();
+}
+
+class _EventItemWidgetState extends State<EventItemWidget> {
+  @override
   Widget build(BuildContext context) {
+    var eventListProvider = Provider.of<EventListProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
     return Container(
       height: height * 0.3,
       padding: EdgeInsets.symmetric(vertical: height * 0.015, horizontal:  width * 0.03),
@@ -18,8 +32,8 @@ class EventItemWidget extends StatelessWidget {
           width: 2,
         ),
         borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(image: AssetImage(AssetsManager.birthdayEventBg),fit: BoxFit.fill)
-      ),
+          image: DecorationImage(
+              image: AssetImage(widget.event.image), fit: BoxFit.fill)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,8 +46,14 @@ class EventItemWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text('22', style:  AppStyles.bold20PrimaryLight,),
-                Text('NOV', style:  AppStyles.bold20PrimaryLight,),
+                Text(
+                  widget.event.dateTime.day.toString(),
+                  style: AppStyles.bold20PrimaryLight,
+                ),
+                Text(
+                  DateFormat('MMM').format(widget.event.dateTime),
+                  style: AppStyles.bold20PrimaryLight,
+                ),
               ],
             ),
           ),
@@ -46,9 +66,26 @@ class EventItemWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: Text('This is a Birthday Party ',style: AppStyles.bold14black,)),
-                ImageIcon(AssetImage(AssetsManager.favouriteIconSelected),
-                color:  AppColors.primaryLight,)
+                Expanded(
+                    child: Text(
+                  widget.event.title,
+                  style: AppStyles.bold14black,
+                )),
+                InkWell(
+                  onTap: () {
+                    eventListProvider.updateIsFavourite(widget.event);
+                    //eventListProvider.changeIsFavourite(widget.event);
+                  },
+                  child: widget.event.isFavourite == true
+                      ? ImageIcon(
+                          AssetImage(AssetsManager.favouriteIconSelected),
+                          color: AppColors.primaryLight,
+                        )
+                      : ImageIcon(
+                          AssetImage(AssetsManager.favouriteIconUnselected),
+                          color: AppColors.primaryLight,
+                        ),
+                )
               ],
             ),
           ),

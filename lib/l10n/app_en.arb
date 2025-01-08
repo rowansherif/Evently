@@ -34,5 +34,21 @@
 "profile" : "Profile",
 "logout" : "Logout",
 "register" : "Register",
-"loginWithGoogle" : "Login With Google"
+"loginWithGoogle" : "Login With Google",
+"title" : "Title",
+"eventTitle" : "Event Title",
+"description" : "Description",
+"eventDescription" : "Event Description",
+"eventDate" : "Event Date",
+"createEvent" : "Create Event",
+"chooseDate" : "Choose Date",
+"chooseTme" : "Choose Time",
+"eventTime" : "Event Time",
+"chooseEventLocation" : "Choose Event Location",
+"addEvent" : "Add Event",
+"location" : "Location",
+"pleaseEnterEventTitle" : "Please Enter Event Title",
+"pleaseEnterEventDescription" : "Please Enter Event Description",
+"noEvents" : "No Events",
+"noFavouriteEvent" : "No Favourite Events"
 }

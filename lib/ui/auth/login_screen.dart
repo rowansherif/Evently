@@ -1,3 +1,4 @@
+import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/ui/auth/create_account_screen.dart';
 import 'package:events_app/ui/auth/forget_password_screen.dart';
 import 'package:events_app/ui/home_screen/taps/custom_elevated_button.dart';
@@ -5,16 +6,24 @@ import 'package:events_app/ui/home_screen/taps/custom_textfield.dart';
 import 'package:events_app/utils/app_colors.dart';
 import 'package:events_app/utils/app_styles.dart';
 import 'package:events_app/utils/assets_manager.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import '../home_screen/home_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String routeName = 'login_screen';
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<AppThemeProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -25,14 +34,18 @@ class LoginScreen extends StatelessWidget {
           spacing: height * 0.02,
           children: [
             Image.asset(
-              AssetsManager.logo,
+              themeProvider.appTheme == ThemeMode.light
+                  ? AssetsManager.lightLogo
+                  : AssetsManager.darkLogo,
               height: height * 0.25,
             ),
             CustomTextfield(
               hintText: AppLocalizations.of(context)!.email,
               prefixIcon: ImageIcon(
                 AssetImage(AssetsManager.emailIcon),
-                color: AppColors.greyColor,
+                color: themeProvider.appTheme == ThemeMode.light
+                    ? AppColors.greyColor
+                    : AppColors.whiteColor,
               ),
             ),
             CustomTextfield(
@@ -40,11 +53,15 @@ class LoginScreen extends StatelessWidget {
                 obscureText: true,
                 prefixIcon: ImageIcon(
                   AssetImage(AssetsManager.passwordIcon),
-                  color: AppColors.greyColor,
+                  color: themeProvider.appTheme == ThemeMode.light
+                      ? AppColors.greyColor
+                      : AppColors.whiteColor,
                 ),
                 suffixIcon: ImageIcon(
                   AssetImage(AssetsManager.showPasswordIcon),
-                  color: AppColors.greyColor,
+                  color: themeProvider.appTheme == ThemeMode.light
+                      ? AppColors.greyColor
+                      : AppColors.whiteColor,
                 )),
             TextButton(
                 onPressed: () {
@@ -58,32 +75,33 @@ class LoginScreen extends StatelessWidget {
                     textAlign: TextAlign.end,
                     style: AppStyles.boldItalic16PrimaryLight.copyWith(
                         decoration: TextDecoration.underline,
+                        decorationColor: AppColors.primaryLight,
                         color: AppColors.primaryLight),
                   ),
                 )),
             CustomElevatedButton(
-              buttonOnClick: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(HomeScreen.routeName);
-              },
+              buttonOnClick: login,
               buttonTitle: AppLocalizations.of(context)!.login,
               buttonColor: AppColors.primaryLight,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed(CreateAccountScreen.routeName);
-              },
-              child: Text.rich(TextSpan(children: [
-                TextSpan(
-                    text: AppLocalizations.of(context)!.doNotHaveAccount,
-                    style: AppStyles.medium16Black),
-                TextSpan(
-                    text: AppLocalizations.of(context)!.createAccount,
-                    style: AppStyles.boldItalic16PrimaryLight.copyWith(
-                        decoration: TextDecoration.underline,
-                        color: AppColors.primaryLight))
-              ])),
-            ),
+            Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: AppLocalizations.of(context)!.doNotHaveAccount,
+                  style: themeProvider.appTheme == ThemeMode.light
+                      ? AppStyles.medium16Black
+                      : AppStyles.medium16White),
+              TextSpan(
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.of(context)
+                          .pushNamed(CreateAccountScreen.routeName);
+                    },
+                  text: AppLocalizations.of(context)!.createAccount,
+                  style: AppStyles.boldItalic16PrimaryLight.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: AppColors.primaryLight,
+                      color: AppColors.primaryLight))
+            ])),
             Row(
               children: [
                 Expanded(
@@ -116,5 +134,10 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void login() {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        HomeScreen.routeName, (Route<dynamic> route) => false);
   }
 }
