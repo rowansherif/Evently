@@ -2,6 +2,7 @@ import 'package:events_app/firebase_utils.dart';
 import 'package:events_app/model/event.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/providers/event_list_provider.dart';
+import 'package:events_app/providers/user_provider.dart';
 import 'package:events_app/ui/home_screen/add_event/custom_add_event_row.dart';
 import 'package:events_app/ui/home_screen/taps/custom_elevated_button.dart';
 import 'package:events_app/ui/home_screen/taps/custom_textfield.dart';
@@ -9,6 +10,7 @@ import 'package:events_app/ui/home_screen/taps/home/tap_event_widget.dart';
 import 'package:events_app/utils/app_colors.dart';
 import 'package:events_app/utils/app_styles.dart';
 import 'package:events_app/utils/assets_manager.dart';
+import 'package:events_app/utils/flutter_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -22,19 +24,16 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
-  int selectedIndex = 0;
   var formKey = GlobalKey<FormState>();
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   DateTime? selectedDate;
-
   String? formatedDate;
-
   String? selectedTime;
-
   String selectedEventName = '';
   String selectedImage = '';
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +41,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     eventListProvider = Provider.of<EventListProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    userProvider = Provider.of<UserProvider>(context);
     List<String> eventNameList = [
       AppLocalizations.of(context)!.sport,
       AppLocalizations.of(context)!.birthday,
@@ -64,8 +64,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
       AssetsManager.holidayImage,
       AssetsManager.eatingImage
     ];
-    selectedEventName = eventNameList[selectedIndex];
-    selectedImage = eventImageList[selectedIndex];
+    selectedEventName = eventNameList[eventListProvider.selectedIndex];
+    selectedImage = eventImageList[eventListProvider.selectedIndex];
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
@@ -88,7 +88,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Image.asset(
-                  eventImageList[selectedIndex],
+                  eventImageList[eventListProvider.selectedIndex],
                   fit: BoxFit.cover,
                 ),
               ),
@@ -99,8 +99,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          selectedIndex = index;
-                          setState(() {});
+                          eventListProvider.changeSelectedIndex(
+                              index, userProvider.currentUser!.id);
                         },
                         child: TapEventWidget(
                             eventName: eventNameList[index],
@@ -108,7 +108,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             boxColor: AppColors.primaryLight,
                             selectedTextStyle: AppStyles.bold16White,
                             unSelectedTextStyle: AppStyles.bold16PrimaryLight,
-                            isSelected: selectedIndex == index ? true : false),
+                            isSelected: eventListProvider.selectedIndex == index
+                                ? true
+                                : false),
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -275,11 +277,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
           description: descriptionController.text,
           dateTime: selectedDate!,
           time: selectedTime!);
-      FirebaseUtils.addEventToFireStore(event)
-          .timeout(Duration(microseconds: 500), onTimeout: () {
+      FirebaseUtils.addEventToFireStore(event, userProvider.currentUser!.id)
+          .then((value) {
+        ToastMsg.toastMsg(msg: 'Event Added successfully');
         print("event added successfully");
         //TODO: refresh eventList
-        eventListProvider.showAllEvents();
+        eventListProvider.showAllEvents(userProvider.currentUser!.id);
+        Navigator.pop(context);
+      }).timeout(Duration(microseconds: 500), onTimeout: () {
+        ToastMsg.toastMsg(msg: 'Event Added successfully');
+        print("event added successfully");
+        //TODO: refresh eventList
+        eventListProvider.showAllEvents(userProvider.currentUser!.id);
         Navigator.pop(context);
       });
     }

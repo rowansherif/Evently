@@ -50,5 +50,8 @@
 "pleaseEnterEventTitle" : "Please Enter Event Title",
 "pleaseEnterEventDescription" : "Please Enter Event Description",
 "noEvents" : "No Events",
-"noFavouriteEvent" : "No Favourite Events"
+"noFavouriteEvent" : "No Favourite Events",
+"eventDetails" : "Event Details",
+"editEvent" : "Edit Event",
+"updateEvent" : "Update Event"
 }

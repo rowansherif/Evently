@@ -2,10 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/providers/app_language_provider.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/providers/event_list_provider.dart';
+import 'package:events_app/providers/user_provider.dart';
 import 'package:events_app/ui/auth/create_account_screen.dart';
 import 'package:events_app/ui/auth/forget_password_screen.dart';
 import 'package:events_app/ui/auth/login_screen.dart';
 import 'package:events_app/ui/home_screen/add_event/add_event_screen.dart';
+import 'package:events_app/ui/home_screen/edit_event/edit_event_screen.dart';
+import 'package:events_app/ui/home_screen/event_details/event_details_screen.dart';
 import 'package:events_app/ui/home_screen/home_screen.dart';
 import 'package:events_app/utils/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,13 +23,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseFirestore.instance.disableNetwork();
+  //await FirebaseFirestore.instance.disableNetwork();
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(
-          create: (context)=> AppLanguageProvider()),
-      ChangeNotifierProvider(create: (context) => AppThemeProvider()),
-    ChangeNotifierProvider(create: (context) => EventListProvider())
+    ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
+    ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+    ChangeNotifierProvider(create: (context) => EventListProvider()),
+    ChangeNotifierProvider(create: (context) => UserProvider())
   ],
       child: MyApp()));
 }
@@ -44,7 +47,9 @@ class MyApp extends StatelessWidget{
         HomeScreen.routeName : (context) => HomeScreen(),
         CreateAccountScreen.routeName: (context) => CreateAccountScreen(),
         ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
-        AddEventScreen.routeName: (context) => AddEventScreen()
+        AddEventScreen.routeName: (context) => AddEventScreen(),
+        EventDetailsScreen.routeName: (context) => EventDetailsScreen(),
+        EditEventScreen.routeName: (context) => EditEventScreen()
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

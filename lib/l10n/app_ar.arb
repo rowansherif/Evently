@@ -50,5 +50,8 @@
 "pleaseEnterEventTitle" : "برجاء ادخال عنوان الحدث",
 "pleaseEnterEventDescription" : "برجاء ادخال وصف الحدث",
 "noEvents" : "لا يوجد احداث",
-"noFavouriteEvent" : "لا يوجد احداث مفضلة"
+"noFavouriteEvent" : "لا يوجد احداث مفضلة",
+"eventDetails" : "تفاصيل الحدث",
+"editEvent" : "تعديل الحدث",
+"updateEvent" : "تعديل الحدث"
 }

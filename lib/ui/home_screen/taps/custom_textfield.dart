@@ -18,12 +18,14 @@ class CustomTextfield extends StatelessWidget {
   int maxLines;
   MyValidator validator;
   TextEditingController? controller;
+  TextInputType? keyboardType;
 
   CustomTextfield(
       {this.borderColor,
       this.prefixIcon,
       this.suffixIcon,
       required this.hintText,
+      this.keyboardType,
       this.hintStyle,
       this.validator,
       this.controller,
@@ -36,6 +38,7 @@ class CustomTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
     return TextFormField(
+      keyboardType: keyboardType ?? TextInputType.text,
       controller: controller,
       validator: validator,
       maxLines: maxLines,

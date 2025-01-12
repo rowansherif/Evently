@@ -1,5 +1,6 @@
 import 'package:events_app/firebase_utils.dart';
 import 'package:events_app/model/event.dart';
+import 'package:events_app/utils/flutter_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -25,8 +26,8 @@ class EventListProvider extends ChangeNotifier {
     ];
   }
 
-  void showAllEvents() async {
-    var querySnapshot = await FirebaseUtils.getEventCollection().get();
+  void showAllEvents(String uId) async {
+    var querySnapshot = await FirebaseUtils.getEventCollection(uId).get();
     eventList = querySnapshot.docs.map((doc) {
       return doc.data();
     }).toList();
@@ -38,8 +39,8 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void showFilteredEventList() async {
-    var querySnapshot = await FirebaseUtils.getEventCollection().get();
+  void showFilteredEventList(String uId) async {
+    var querySnapshot = await FirebaseUtils.getEventCollection(uId).get();
     eventList = querySnapshot.docs.map((doc) {
       return doc.data();
     }).toList();
@@ -65,27 +66,27 @@ class EventListProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void changeSelectedIndex(int newSelectedIndex) {
+  void changeSelectedIndex(int newSelectedIndex, String uId) {
     selectedIndex = newSelectedIndex;
-    selectedIndex == 0 ? showAllEvents() : showFilteredEventList();
+    selectedIndex == 0 ? showAllEvents(uId) : showFilteredEventList(uId);
   }
 
-  void updateIsFavourite(Event event) {
-    if (event.isFavourite == false) {
-      FirebaseUtils.getEventCollection()
-          .doc(event.id)
-          .update({'isFavourite': true});
-    } else {
-      FirebaseUtils.getEventCollection()
-          .doc(event.id)
-          .update({'isFavourite': false});
-    }
-    selectedIndex == 0 ? showAllEvents() : showFilteredEventList();
-    showFavouriteList();
+  void updateIsFavourite(Event event, String uId) {
+    FirebaseUtils.getEventCollection(uId)
+        .doc(event.id)
+        .update({'isFavourite': !event.isFavourite}).then((value) {
+      ToastMsg.toastMsg(msg: 'Event Updated Successfully');
+      selectedIndex == 0 ? showAllEvents(uId) : showFilteredEventList(uId);
+      showFavouriteList(uId);
+    }).timeout(Duration(milliseconds: 500), onTimeout: () {
+      ToastMsg.toastMsg(msg: 'Event Updated Successfully');
+      selectedIndex == 0 ? showAllEvents(uId) : showFilteredEventList(uId);
+      showFavouriteList(uId);
+    });
   }
 
-  Future<void> showFavouriteList() async {
-    var querySnapshot = await FirebaseUtils.getEventCollection()
+  Future<void> showFavouriteList(String uId) async {
+    var querySnapshot = await FirebaseUtils.getEventCollection(uId)
         .where('isFavourite', isEqualTo: true)
         .orderBy('dateTime', descending: false)
         .get();
@@ -95,5 +96,35 @@ class EventListProvider extends ChangeNotifier {
     }).toList();
 
     notifyListeners();
+  }
+
+  Future<void> deleteEvent(String uId, Event event) {
+    return FirebaseUtils.getEventCollection(uId)
+        .doc(event.id)
+        .delete()
+        .then((value) {
+      print('event deleted successfully');
+      ToastMsg.toastMsg(msg: 'Event Deleted Successfully');
+      selectedIndex == 0 ? showAllEvents(uId) : showFilteredEventList(uId);
+      showFavouriteList(uId);
+      notifyListeners();
+    });
+  }
+
+  Future<void> updateEventDetails(String uId, Event event) {
+    return FirebaseUtils.getEventCollection(uId).doc(event.id).update({
+      'eventName': event.eventName,
+      'image': event.image,
+      'title': event.title,
+      'description': event.description,
+      'dateTime': event.dateTime,
+      'time': event.time
+    }).then((value) {
+      print('Event Updated Successfully');
+      ToastMsg.toastMsg(msg: 'Event Updated Successfully');
+      selectedIndex == 0 ? showAllEvents(uId) : showFilteredEventList(uId);
+      showFavouriteList(uId);
+      notifyListeners();
+    });
   }
 }

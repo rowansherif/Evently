@@ -1,5 +1,7 @@
+import 'package:events_app/providers/app_language_provider.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/providers/event_list_provider.dart';
+import 'package:events_app/providers/user_provider.dart';
 import 'package:events_app/ui/home_screen/taps/home/event_item_widget.dart';
 import 'package:events_app/ui/home_screen/taps/home/tap_event_widget.dart';
 import 'package:events_app/utils/app_colors.dart';
@@ -22,10 +24,12 @@ class _HomeTapState extends State<HomeTap> {
     var width = MediaQuery.of(context).size.width;
     var eventListProvider = Provider.of<EventListProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    var appLanguageProvider = Provider.of<AppLanguageProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     eventListProvider.getEventNameList(context);
 
     if (eventListProvider.eventList.isEmpty) {
-      eventListProvider.showAllEvents();
+      eventListProvider.showAllEvents(userProvider.currentUser!.id);
     }
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +47,7 @@ class _HomeTapState extends State<HomeTap> {
               style: AppStyles.regular14White,
             ),
             Text(
-              'John Safwat',
+              userProvider.currentUser!.name,
               style: AppStyles.bold24White,
             )
           ],
@@ -64,7 +68,7 @@ class _HomeTapState extends State<HomeTap> {
                 color: AppColors.whiteColor,
                 borderRadius: BorderRadius.circular(8)),
             child: Text(
-              'EN',
+              appLanguageProvider.appLanguage.toUpperCase(),
               style: AppStyles.bold14PrimaryLight,
             ),
           ),
@@ -103,7 +107,8 @@ class _HomeTapState extends State<HomeTap> {
                     length: eventListProvider.eventNameList.length,
                     child: TabBar(
                       onTap: (index) {
-                        eventListProvider.changeSelectedIndex(index);
+                        eventListProvider.changeSelectedIndex(
+                            index, userProvider.currentUser!.id);
                       },
                       isScrollable: true,
                       indicatorColor: AppColors.transparentColor,

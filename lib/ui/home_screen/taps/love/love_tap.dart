@@ -1,5 +1,6 @@
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/providers/event_list_provider.dart';
+import 'package:events_app/providers/user_provider.dart';
 import 'package:events_app/ui/home_screen/taps/custom_textfield.dart';
 import 'package:events_app/ui/home_screen/taps/home/event_item_widget.dart';
 import 'package:events_app/utils/app_colors.dart';
@@ -17,9 +18,10 @@ class LoveTap extends StatelessWidget {
     var themeProvider = Provider.of<AppThemeProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    // if(eventListProvider.favouriteList.isEmpty){
-    //   eventListProvider.showFavouriteList();
-    //   }
+    var userProvider = Provider.of<UserProvider>(context);
+    if (eventListProvider.favouriteList.isEmpty) {
+      eventListProvider.showFavouriteList(userProvider.currentUser!.id);
+    }
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: width * 0.02),

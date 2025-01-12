@@ -1,5 +1,8 @@
 import 'package:events_app/providers/app_language_provider.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
+import 'package:events_app/providers/event_list_provider.dart';
+import 'package:events_app/providers/user_provider.dart';
+import 'package:events_app/ui/auth/login_screen.dart';
 import 'package:events_app/ui/home_screen/language_bottom_sheet.dart';
 import 'package:events_app/ui/home_screen/theme_bottom_sheet.dart';
 import 'package:events_app/utils/app_colors.dart';
@@ -22,6 +25,8 @@ class _ProfileTapState extends State<ProfileTap> {
     var width = MediaQuery.of(context).size.width;
     var languageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+    var eventListProvider = Provider.of<EventListProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,10 +49,14 @@ class _ProfileTapState extends State<ProfileTap> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Route Academy',
-                style: AppStyles.bold24White,),
+                Text(
+                  userProvider.currentUser!.name,
+                  style: AppStyles.bold24White,),
                 SizedBox(width: width*0.02,),
-                Text('route@gmail.com',style: AppStyles.medium16White,)
+                Text(
+                  userProvider.currentUser!.email,
+                  style: AppStyles.medium16White,
+                )
               ],
             )
           ],
@@ -146,7 +155,11 @@ class _ProfileTapState extends State<ProfileTap> {
                   borderRadius: BorderRadius.circular(10)
                 )
               ),
-              onPressed: (){},
+              onPressed: () {
+                eventListProvider.filteredEventList = [];
+                eventListProvider.favouriteList = [];
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: height * 0.015),
                 padding: EdgeInsets.symmetric(horizontal: width * 0.04),
