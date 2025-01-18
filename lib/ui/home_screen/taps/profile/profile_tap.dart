@@ -8,8 +8,10 @@ import 'package:events_app/ui/home_screen/theme_bottom_sheet.dart';
 import 'package:events_app/utils/app_colors.dart';
 import 'package:events_app/utils/app_styles.dart';
 import 'package:events_app/utils/assets_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class ProfileTap extends StatefulWidget {
@@ -155,7 +157,10 @@ class _ProfileTapState extends State<ProfileTap> {
                   borderRadius: BorderRadius.circular(10)
                 )
               ),
-              onPressed: () {
+              onPressed: () async {
+                GoogleSignIn googleSignIn = GoogleSignIn();
+                googleSignIn.disconnect();
+                await FirebaseAuth.instance.signOut();
                 eventListProvider.filteredEventList = [];
                 eventListProvider.favouriteList = [];
                 Navigator.pushReplacementNamed(context, LoginScreen.routeName);

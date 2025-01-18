@@ -1,4 +1,5 @@
 import 'package:events_app/firebase_utils.dart';
+import 'package:events_app/model/my_user.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/providers/event_list_provider.dart';
 import 'package:events_app/providers/user_provider.dart';
@@ -249,8 +250,20 @@ class _LoginScreenState extends State<LoginScreen> {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    //TODO: show loading
+    DialogUtils.showLoading(context: context, msg: 'Loading...');
+    final credentials =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    MyUser myUser = MyUser(
+        id: credentials.user?.uid ?? '',
+        name: credentials.user?.displayName ?? '',
+        email: credentials.user?.email ?? '');
+    FirebaseUtils.addUserToFireStore(myUser);
+    var userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.updateUserData(myUser);
     print('signed in successfully');
+    //TODO: hide loading
+    DialogUtils.hideLoading(context);
     Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
   }
 }
