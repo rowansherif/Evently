@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/providers/app_language_provider.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/providers/event_list_provider.dart';
 import 'package:events_app/providers/user_provider.dart';
-import 'package:events_app/ui/auth/create_account_screen.dart';
 import 'package:events_app/ui/auth/forget_password_screen.dart';
-import 'package:events_app/ui/auth/login_screen.dart';
+import 'package:events_app/ui/auth/login/login_screen.dart';
+import 'package:events_app/ui/auth/register/register_screen.dart';
 import 'package:events_app/ui/home_screen/add_event/add_event_screen.dart';
 import 'package:events_app/ui/home_screen/edit_event/edit_event_screen.dart';
 import 'package:events_app/ui/home_screen/event_details/event_details_screen.dart';
@@ -45,7 +44,7 @@ class MyApp extends StatelessWidget{
       routes: {
         LoginScreen.routeName: (context) => LoginScreen(),
         HomeScreen.routeName : (context) => HomeScreen(),
-        CreateAccountScreen.routeName: (context) => CreateAccountScreen(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
         ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
         AddEventScreen.routeName: (context) => AddEventScreen(),
         EventDetailsScreen.routeName: (context) => EventDetailsScreen(),

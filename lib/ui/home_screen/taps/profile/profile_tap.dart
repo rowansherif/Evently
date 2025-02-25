@@ -2,7 +2,7 @@ import 'package:events_app/providers/app_language_provider.dart';
 import 'package:events_app/providers/app_theme_provider.dart';
 import 'package:events_app/providers/event_list_provider.dart';
 import 'package:events_app/providers/user_provider.dart';
-import 'package:events_app/ui/auth/login_screen.dart';
+import 'package:events_app/ui/auth/login/login_screen.dart';
 import 'package:events_app/ui/home_screen/language_bottom_sheet.dart';
 import 'package:events_app/ui/home_screen/theme_bottom_sheet.dart';
 import 'package:events_app/utils/app_colors.dart';

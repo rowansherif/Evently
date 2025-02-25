@@ -28,12 +28,12 @@ class DialogUtils {
 
   static void showMessage(
       {required BuildContext context,
-      required String msg,
-      String title = '',
-      String? posActionName,
-      String? negActionName,
-      Function? posAction,
-      Function? negAction}) {
+        required String msg,
+        String title = '',
+        String? posActionName,
+        String? negActionName,
+        Function? posAction,
+        Function? negAction}) {
     List<Widget> actions = [];
     if (posActionName != null) {
       actions.add(TextButton(

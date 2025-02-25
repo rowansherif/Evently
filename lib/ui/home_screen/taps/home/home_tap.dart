@@ -47,7 +47,8 @@ class _HomeTapState extends State<HomeTap> {
               style: AppStyles.regular14White,
             ),
             Text(
-              userProvider.currentUser!.name,
+              'user name',
+              //userProvider.currentUser!.name,
               style: AppStyles.bold24White,
             )
           ],
